@@ -1,0 +1,24 @@
+{
+  "name": "bis-gmbh/ip-addr",
+  "description": "Manages IPv4 and IPv6 addresses and subnets",
+  "keywords": ["php", "library", "ip", "ipv4", "ipv6", "cidr", "rfc791", "rfc4291", "rfc4632"],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Dmitry A. Nezhelskoy",
+      "email": "dmitry@nezhelskoy.pro"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "ext-gmp": ">=5.4"
+  },
+  "require-dev": {
+        "phpunit/phpunit": "^5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "IPAddr\\": "src/"
+    }
+  }
+}
