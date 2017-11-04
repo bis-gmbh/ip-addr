@@ -330,7 +330,11 @@ class v4 extends BaseAddress
      */
     protected function maskFromPrefixLength($prefixLength)
     {
-        $mask = 0xFFFFFFFF << (32 - $prefixLength);
+        $mask = 0xFFFFFFFF;
+
+        if ($prefixLength < $this->maxPrefixLength) {
+            $mask = 0xFFFFFFFF << ($this->maxPrefixLength - $prefixLength);
+        }
 
         return (PHP_INT_SIZE == 8 ? $mask & 0x00000000FFFFFFFF : $mask);
     }
