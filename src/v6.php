@@ -438,6 +438,25 @@ class v6 extends BaseAddress
         return $mask;
     }
 
+    protected function findCommonMask($firstAddr, $secondAddr)
+    {
+        $commonMask = gmp_init(0);
+
+        for ($i = $this->maxPrefixLength; $i >= 0; $i--) {
+            $commonMask = $this->maskFromPrefixLength($i);
+            $newNetworkAddr = gmp_and($firstAddr, $commonMask);
+            $newBroadcastAddr = gmp_add($newNetworkAddr, $this->gmp_not($commonMask));
+            if (
+                gmp_cmp($secondAddr, $newNetworkAddr) >= 0
+                && gmp_cmp($secondAddr, $newBroadcastAddr) <= 0
+            ) {
+                break;
+            }
+        }
+
+        return $commonMask;
+    }
+
     /**
      * @return resource|\GMP
      */

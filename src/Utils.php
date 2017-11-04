@@ -28,9 +28,15 @@ class Utils
                 $addr = v6::create($anyFormat, $maskString);
                 break;
             default: // let's try to guess
-                if (v6::isCIDR($anyFormat) || v6::isTextual($anyFormat) || v6::isNumeric($anyFormat)) {
+                if (
+                    v6::isRange($anyFormat) || v6::isCIDR($anyFormat)
+                    || v6::isTextual($anyFormat) || v6::isNumeric($anyFormat)
+                ) {
                     $addr = v6::create($anyFormat, $maskString);
-                } else if (v4::isCIDR($anyFormat) || v4::isTextual($anyFormat) || v4::isNumeric($anyFormat)) {
+                } else if (
+                    v4::isRange($anyFormat) || v4::isCIDR($anyFormat)
+                    || v4::isTextual($anyFormat) || v4::isNumeric($anyFormat)
+                ) {
                     $addr = v4::create($anyFormat, $maskString);
                 }
         }

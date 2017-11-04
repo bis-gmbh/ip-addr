@@ -77,6 +77,23 @@ class IPv4Test extends PHPUnit_Framework_TestCase
         $this->assertTrue(IPv4::isCIDR('255.255.255.255/32'));
     }
 
+    public function testIsRange()
+    {
+        $this->assertTrue(IPv4::isRange('0.0.0.0 - 0.0.0.0'));
+        $this->assertTrue(IPv4::isRange('192.168.100.2-  192.168.100.4'));
+        $this->assertTrue(IPv4::isRange('192.168.100    - 192.168.200'));
+        $this->assertTrue(IPv4::isRange('4.3.2.1-1.2.3.4'));
+        $this->assertTrue(IPv4::isRange('192.168.0.250 - 192.168.0.252'));
+
+        $this->assertFalse(IPv4::isRange(null));
+        $this->assertFalse(IPv4::isRange('10.10/10'));
+        $this->assertFalse(IPv4::isRange('0'));
+        $this->assertFalse(IPv4::isRange('anything-anything else'));
+        $this->assertFalse(IPv4::isRange('-192.168.0.250'));
+        $this->assertFalse(IPv4::isRange('192.168.0.250   -  '));
+        $this->assertFalse(IPv4::isRange('   -  '));
+    }
+
     public function testBinary()
     {
         $this->assertEquals(IPv4::create(0)->binary(), '0b00000000000000000000000000000000');
@@ -224,6 +241,12 @@ class IPv4Test extends PHPUnit_Framework_TestCase
         $this->assertEquals(IPv4::create('192.168/16')->cidr(), '192.168.0.0/16');
         $this->assertEquals(IPv4::create('192.168.100.15', '255.255.255.252')->cidr(), '192.168.100.15/30');
         $this->assertEquals(IPv4::create('10/8')->cidr(), '10.0.0.0/8');
+        $this->assertEquals(IPv4::create('0.0.0.0-255.255.255.255')->cidr(), '0.0.0.0/0');
+        $this->assertEquals(IPv4::create('192.168.0.0-192.168.0.255')->cidr(), '192.168.0.0/24');
+        $this->assertEquals(IPv4::create('85.239.177.232 - 85.239.177.235')->cidr(), '85.239.177.232/30');
+        $this->assertEquals(IPv4::create('8.8.4.4  -8.8.4.4')->cidr(), '8.8.4.4/32');
+        $this->assertEquals(IPv4::create('192.168.0.255-  192.168.1.255')->cidr(), '192.168.0.255/23');
+        $this->assertEquals(IPv4::create('192.168.1.255  -192.168.0.255')->cidr(), '192.168.1.255/23');
     }
 
     public function testReverse()

@@ -34,6 +34,13 @@ abstract class BaseAddress implements Address
     abstract protected function fromTextual($value);
 
     /**
+     * @param mixed $firstAddr
+     * @param mixed $secondAddr
+     * @retrun mixed
+     */
+    abstract protected function findCommonMask($firstAddr, $secondAddr);
+
+    /**
      * @param int $prefixLength
      * @return mixed
      */
@@ -72,6 +79,13 @@ abstract class BaseAddress implements Address
             $cidrParts = explode('/', $anyFormat);
             $this->addr = $this->fromTextual($cidrParts[0]);
             $this->mask = $this->maskFromPrefixLength(intval($cidrParts[1]));
+        } else if (static::isRange($anyFormat)) {
+            if ($maskString !== null) {
+                throw new \InvalidArgumentException('Mask argument not allowed');
+            }
+            list($first, $second) = preg_split('/\s{0,}-\s{0,}/i', $anyFormat, 2);
+            $this->addr = $this->fromTextual($first);
+            $this->mask = $this->findCommonMask($this->addr, $this->fromTextual($second));
         } else {
             throw new \InvalidArgumentException('Wrong arguments');
         }
@@ -104,6 +118,29 @@ abstract class BaseAddress implements Address
     public static function isCIDR($value)
     {
         throw new \BadMethodCallException('Unimplemented method, must be overrided in a child class');
+    }
+
+    /**
+     * @param mixed $value
+     * @return bool
+     */
+    public static function isRange($value)
+    {
+        if (false === is_string($value)) {
+            return false;
+        }
+
+        $range = array_map('trim', explode('-', $value));
+
+        if (
+            count($range) === 2
+            && static::isTextual($range[0])
+            && static::isTextual($range[1])
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

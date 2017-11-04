@@ -339,6 +339,22 @@ class v4 extends BaseAddress
         return (PHP_INT_SIZE == 8 ? $mask & 0x00000000FFFFFFFF : $mask);
     }
 
+    protected function findCommonMask($firstAddr, $secondAddr)
+    {
+        $commonMask = 0;
+
+        for ($i = $this->maxPrefixLength; $i >= 0; $i--) {
+            $commonMask = $this->maskFromPrefixLength($i);
+            $newNetworkAddr = $firstAddr & $commonMask;
+            $newBroadcastAddr = $newNetworkAddr + $this->not($commonMask);
+            if ($secondAddr >= $newNetworkAddr && $secondAddr <= $newBroadcastAddr) {
+                break;
+            }
+        }
+
+        return $commonMask;
+    }
+
     /**
      * @return int
      */

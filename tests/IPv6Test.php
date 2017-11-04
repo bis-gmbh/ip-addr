@@ -56,6 +56,24 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         $this->assertTrue(IPv6::isCIDR('a::f/117'));
     }
 
+    public function testIsRange()
+    {
+        $this->assertTrue(IPv6::isRange(':: - ::'));
+        $this->assertTrue(IPv6::isRange('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff-  ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'));
+        $this->assertTrue(IPv6::isRange('ffff:ffff:ffff:ffff::    - ffff:ffff:ffff:ffff:eeee:dddd:cccc:bbbb'));
+        $this->assertTrue(IPv6::isRange('2a02:6b8::2:242 - 2a02:6b8::2:247'));
+        $this->assertTrue(IPv6::isRange('::4.3.2.1-::1.2.3.4'));
+        $this->assertTrue(IPv6::isRange('4a00::64 - 2a00:1450:4010:c0f::64'));
+        $this->assertFalse(IPv6::isRange(null));
+        $this->assertFalse(IPv6::isRange('10:10::/10'));
+        $this->assertFalse(IPv6::isRange('0'));
+        $this->assertFalse(IPv6::isRange('anything-anything else'));
+        $this->assertFalse(IPv6::isRange('-::ffff:2.3.4.0'));
+        $this->assertFalse(IPv6::isRange('a:aaaa::   -  '));
+        $this->assertFalse(IPv6::isRange('   -  '));
+        $this->assertFalse(IPv6::isRange('b::b - 127.0.0.1'));
+    }
+
     public function testAssign()
     {
         $ip = new IPv6;
@@ -221,6 +239,8 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         $this->assertEquals(IPv6::create('ffff:ffff:ffff:ffff::/64')->cidr(), 'ffff:ffff:ffff:ffff::/64');
         $this->assertEquals(IPv6::create('2a02:6b8::2:242/30')->cidr(), '2a02:6b8::2:242/30');
         $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64/4')->cidr(), '2a00:1450:4010:c0f::64/4');
+        $this->assertEquals(IPv6::create('2a02:6b8::2:242 - 2a02:06bb:ffff:ffff:ffff:ffff:ffff:ffff')->cidr(), '2a02:6b8::2:242/30');
+        $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64 - 2fff::')->cidr(), '2a00:1450:4010:c0f::64/5');
     }
 
     public function testReverse()
