@@ -26,6 +26,11 @@ class IPv4Test extends PHPUnit_Framework_TestCase
         $ip->assign('192.168.0.1', '255.255.255.0');
         $ip->assign('10/8');
 
+        $this->assertNotEquals(
+            IPv4::create('10')->hexadecimal(), // 0x0a000000
+            IPv4::create(10)->hexadecimal() // 0x0000000a
+        );
+
         $this->expectException('InvalidArgumentException');
         $ip->assign(-1);
         $ip->assign('192.168.0.1', 0xFFFFFF00);
