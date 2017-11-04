@@ -319,4 +319,23 @@ class IPv4Test extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(sprintf("%s", $ip), '192.168.0.0/24');
     }
+
+    public function testIteration()
+    {
+        $expectedData = [
+            '0: 192.168.0.0/32',
+            '1: 192.168.0.1/32',
+            '2: 192.168.0.2/32',
+            '3: 192.168.0.3/32',
+        ];
+        $actualData = [];
+
+        $subnet = IPv4::create('192.168.0.1 - 192.168.0.2'); // 192.168.0.0/30
+
+        foreach ($subnet as $index => $address) {
+            $actualData[] = sprintf('%d: %s', $index, $address);
+        }
+
+        $this->assertArraySubset($expectedData, $actualData);
+    }
 }

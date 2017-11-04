@@ -246,6 +246,24 @@ class v4 extends BaseAddress
     }
 
     /**
+     * @param int $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return (($this->internalFirstAddr() + intval($offset)) <= $this->internalLastAddr());
+    }
+
+    /**
+     * @param int $offset
+     * @return v4
+     */
+    public function offsetGet($offset)
+    {
+        return new self($this->internalFirstAddr() + intval($offset));
+    }
+
+    /**
      * @return Address|v4
      */
     public function network()

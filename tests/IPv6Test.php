@@ -324,4 +324,23 @@ class IPv6Test extends PHPUnit_Framework_TestCase
 
         $this->assertEquals(sprintf("%s", $ip), '2a02:6b8::2:242/4');
     }
+
+    public function testIteration()
+    {
+        $expectedData = [
+            '0: a:b:c:d:e:f::/128',
+            '1: a:b:c:d:e:f::1/128',
+            '2: a:b:c:d:e:f::2/128',
+            '3: a:b:c:d:e:f::3/128',
+        ];
+        $actualData = [];
+
+        $subnet = IPv6::create('a:b:c:d:e:f::1 - a:b:c:d:e:f::2'); // a:b:c:d:e:f::/127
+
+        foreach ($subnet as $index => $address) {
+            $actualData[] = sprintf('%d: %s', $index, $address);
+        }
+
+        $this->assertArraySubset($expectedData, $actualData);
+    }
 }

@@ -8,7 +8,7 @@
 
 namespace IPAddr;
 
-abstract class BaseAddress implements Address
+abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
 {
     protected $version;
     protected $addr;
@@ -198,5 +198,23 @@ abstract class BaseAddress implements Address
     public function __toString()
     {
         return $this->cidr();
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        throw new \DomainException('Read-only access');
+    }
+
+    public function offsetUnset($offset)
+    {
+        throw new \DomainException('Read-only access');
+    }
+
+    /**
+     * @return AddressIterator
+     */
+    public function getIterator()
+    {
+        return new AddressIterator($this);
     }
 }

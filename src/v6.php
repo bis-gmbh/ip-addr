@@ -237,6 +237,24 @@ class v6 extends BaseAddress
     }
 
     /**
+     * @param int $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return gmp_cmp(gmp_add($this->internalFirstAddr(), gmp_init($offset)), $this->internalLastAddr()) <= 0;
+    }
+
+    /**
+     * @param int $offset
+     * @return v6
+     */
+    public function offsetGet($offset)
+    {
+        return new self(gmp_strval(gmp_add($this->internalFirstAddr(), gmp_init($offset)), 10));
+    }
+
+    /**
      * @return string full textual address
      */
     public function full()
