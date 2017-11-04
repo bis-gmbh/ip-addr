@@ -335,7 +335,7 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         ];
         $actualData = [];
 
-        $subnet = IPv6::create('a:b:c:d:e:f::1 - a:b:c:d:e:f::2'); // a:b:c:d:e:f::/127
+        $subnet = IPv6::create('a:b:c:d:e:f::1 - a:b:c:d:e:f::2'); // a:b:c:d:e:f::/126
 
         foreach ($subnet as $index => $address) {
             $actualData[] = sprintf('%d: %s', $index, $address);

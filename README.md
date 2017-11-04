@@ -19,8 +19,8 @@ if ($providerSubnet->within($userSubnet)) {
     printf("User network: %s\n", $userSubnet->network()->addr());
     printf("User broadcast: %s\n", $userSubnet->broadcast()->addr());
     printf("User addrs:\n");
-    foreach ($userSubnet as $addr) {
-        printf("%s\n", $addr->addr());
+    foreach ($userSubnet as $index => $ip) {
+        printf("%d: %s\n", $index, $ip->addr());
     }
 }
 ```
@@ -31,8 +31,8 @@ Will output:
 User network: 10.100.0.0
 User broadcast: 10.100.0.3
 User addrs:
-10.100.0.0
-10.100.0.1
-10.100.0.2
-10.100.0.3
+0: 10.100.0.0
+1: 10.100.0.1
+2: 10.100.0.2
+3: 10.100.0.3
 ```
