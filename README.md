@@ -3,7 +3,7 @@
 How to install:
 
 ```
-composer require --dev bis-gmbh/ip-addr ^0.3
+composer require --dev bis-gmbh/ip-addr ^0.4
 ```
 
 Usage example:

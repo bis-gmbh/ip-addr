@@ -258,6 +258,8 @@ class IPv6Test extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(IPv6::create()->netType(), 'Unspecified');
         $this->assertEquals(IPv6::create('::1')->netType(), 'Loopback');
+        $this->assertEquals(IPv6::create('::192.17.56.8')->netType(), 'IPv4-Mapped IPv6 Address');
+        $this->assertEquals(IPv6::create('FC01::1')->netType(), 'Unique Site-Local');
         $this->assertEquals(IPv6::create('FF00::1')->netType(), 'Multicast');
         $this->assertEquals(IPv6::create('FE80::1')->netType(), 'Link-Local unicast');
         $this->assertEquals(IPv6::create('2a02:6b8::2:242')->netType(), 'Global Unicast');

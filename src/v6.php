@@ -19,6 +19,12 @@ class v6 extends BaseAddress
         ], [
             'IPv6Notation' => '::1/128',
             'AddressType' => 'Loopback',
+        ], [ // rfc4038
+            'IPv6Notation' => '::FFFF/96',
+            'AddressType' => 'IPv4-Mapped IPv6 Address',
+        ], [ // rfc4193
+            'IPv6Notation' => 'FC00::/7',
+            'AddressType' => 'Unique Site-Local',
         ], [
             'IPv6Notation' => 'FF00::/8',
             'AddressType' => 'Multicast',
