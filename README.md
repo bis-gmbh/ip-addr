@@ -3,7 +3,7 @@
 How to install:
 
 ```
-composer require --dev bis-gmbh/ip-addr ^0.2
+composer require --dev bis-gmbh/ip-addr ^0.3
 ```
 
 Usage example:
@@ -15,7 +15,7 @@ $providerSubnet = IP::make('10/8');
 
 $userSubnet = IP::make('10.100.0.2/30');
 
-if ($providerSubnet->within($userSubnet)) {
+if ($providerSubnet->contains($userSubnet)) {
     printf("User network: %s\n", $userSubnet->network()->addr());
     printf("User broadcast: %s\n", $userSubnet->broadcast()->addr());
     printf("User addrs:\n");

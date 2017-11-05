@@ -83,13 +83,13 @@ interface Address
      * @param $scope
      * @return bool
      */
-    public function contains($scope);
+    public function within($scope);
 
     /**
      * @param Address $addr
      * @return bool
      */
-    public function within(Address $addr);
+    public function contains(Address $addr);
 
     /**
      * @return string

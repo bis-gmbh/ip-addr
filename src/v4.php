@@ -237,7 +237,7 @@ class v4 extends BaseAddress
     public function netType()
     {
         for ($i=0; $i<count(self::$networkTypes); $i++) {
-            if ($this->contains(self::create(self::$networkTypes[$i]['AddressBlock']))) {
+            if ($this->within(self::create(self::$networkTypes[$i]['AddressBlock']))) {
                 return self::$networkTypes[$i]['PresentUse'];
             }
         }
@@ -284,9 +284,9 @@ class v4 extends BaseAddress
      */
     public function netClass()
     {
-        if ($this->contains(self::$privateNetworks)) {
+        if ($this->within(self::$privateNetworks)) {
             return 'E';
-        } else if ($this->contains(self::$multicastNetworks)) {
+        } else if ($this->within(self::$multicastNetworks)) {
             return 'D';
         } else if ($this->mask >= 0xFFFFFF00) {
             return 'C';

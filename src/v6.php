@@ -228,7 +228,7 @@ class v6 extends BaseAddress
     public function netType()
     {
         for ($i=0; $i<count(self::$addressTypes); $i++) {
-            if ($this->contains(self::create(self::$addressTypes[$i]['IPv6Notation']))) {
+            if ($this->within(self::create(self::$addressTypes[$i]['IPv6Notation']))) {
                 return self::$addressTypes[$i]['AddressType'];
             }
         }

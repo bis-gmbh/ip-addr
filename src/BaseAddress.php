@@ -164,7 +164,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
      * @param array|Address $scope
      * @return bool
      */
-    public function contains($scope)
+    public function within($scope)
     {
         if (is_array($scope)) {
             for ($i=0; $i<count($scope); $i++) {
@@ -173,7 +173,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
                     && $this->contains($scope[$i])
                 ) {
                     return true;
-                } else if ($this->contains(self::create($scope[$i]))) {
+                } else if ($this->within(self::create($scope[$i]))) {
                     return true;
                 }
             }
@@ -190,7 +190,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
      * @param Address $addr
      * @return bool
      */
-    public function within(Address $addr)
+    public function contains(Address $addr)
     {
         return $addr->first()->gtEq($this->first()) && $addr->last()->ltEq($this->last());
     }

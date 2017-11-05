@@ -293,20 +293,20 @@ class IPv4Test extends PHPUnit_Framework_TestCase
         $this->assertFalse(IPv4::create('192.167.100.100')->gtEq(IPv4::create('192.168/16')));
     }
 
-    public function testContains()
-    {
-        $this->assertTrue(IPv4::create()->contains(IPv4::create()));
-        $this->assertTrue(IPv4::create('255.255.255.255')->contains(IPv4::create(0xFFFFFFFF)));
-        $this->assertTrue(IPv4::create('192.168.100.100')->contains(IPv4::create('192.168/16')));
-        $this->assertFalse(IPv4::create('192.167.100.100')->contains(IPv4::create('192.168/16')));
-    }
-
     public function testWithin()
     {
         $this->assertTrue(IPv4::create()->within(IPv4::create()));
-        $this->assertTrue(IPv4::create(0xFFFFFFFF)->within(IPv4::create('255.255.255.255')));
-        $this->assertTrue(IPv4::create('192.168/16')->within(IPv4::create('192.168.100.100')));
-        $this->assertFalse(IPv4::create('192.168/16')->within(IPv4::create('192.167.100.100')));
+        $this->assertTrue(IPv4::create('255.255.255.255')->within(IPv4::create(0xFFFFFFFF)));
+        $this->assertTrue(IPv4::create('192.168.100.100')->within(IPv4::create('192.168/16')));
+        $this->assertFalse(IPv4::create('192.167.100.100')->within(IPv4::create('192.168/16')));
+    }
+
+    public function testContains()
+    {
+        $this->assertTrue(IPv4::create()->contains(IPv4::create()));
+        $this->assertTrue(IPv4::create(0xFFFFFFFF)->contains(IPv4::create('255.255.255.255')));
+        $this->assertTrue(IPv4::create('192.168/16')->contains(IPv4::create('192.168.100.100')));
+        $this->assertFalse(IPv4::create('192.168/16')->contains(IPv4::create('192.167.100.100')));
     }
 
     public function testToString()

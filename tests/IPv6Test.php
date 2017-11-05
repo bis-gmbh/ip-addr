@@ -298,20 +298,20 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         $this->assertEquals(IPv6::create('2a00:1450:4010:0c0f:0000:0064:0102:0304')->compressed4(), '2a00:1450:4010:c0f::64:1.2.3.4');
     }
 
-    public function testContains()
-    {
-        $this->assertTrue(IPv6::create()->contains(IPv6::create()));
-        $this->assertTrue(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')->contains(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')));
-        $this->assertTrue(IPv6::create('2a02:6b8:f::')->contains(IPv6::create('2a02:6b8::2:242/4')));
-        $this->assertFalse(IPv6::create('2a02:6b7::')->contains(IPv6::create('2a02:6b8::2:242/32')));
-    }
-
     public function testWithin()
     {
         $this->assertTrue(IPv6::create()->within(IPv6::create()));
-        $this->assertTrue(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')->within(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')));
-        $this->assertTrue(IPv6::create('2a02:6b8::2:242/4')->within(IPv6::create('2a02:6b8:f::')));
-        $this->assertFalse(IPv6::create('2a02:6b8::2:242/32')->within(IPv6::create('2a02:6b7::')));
+        $this->assertTrue(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')->within(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')));
+        $this->assertTrue(IPv6::create('2a02:6b8:f::')->within(IPv6::create('2a02:6b8::2:242/4')));
+        $this->assertFalse(IPv6::create('2a02:6b7::')->within(IPv6::create('2a02:6b8::2:242/32')));
+    }
+
+    public function testContains()
+    {
+        $this->assertTrue(IPv6::create()->contains(IPv6::create()));
+        $this->assertTrue(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')->contains(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff')));
+        $this->assertTrue(IPv6::create('2a02:6b8::2:242/4')->contains(IPv6::create('2a02:6b8:f::')));
+        $this->assertFalse(IPv6::create('2a02:6b8::2:242/32')->contains(IPv6::create('2a02:6b7::')));
     }
 
     public function testToString()
