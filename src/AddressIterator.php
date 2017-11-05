@@ -13,12 +13,12 @@ class AddressIterator implements \Iterator
     /**
      * @var int
      */
-    private $index;
+    protected $index;
 
     /**
      * @var Address
      */
-    private $subnet;
+    protected $subnet;
 
     public function __construct(Address $subnet)
     {

@@ -7,6 +7,7 @@
  */
 
 use IPAddr\v6 as IPv6;
+use IPAddr\HostIterator;
 
 class IPv6Test extends PHPUnit_Framework_TestCase
 {
@@ -342,5 +343,35 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         }
 
         $this->assertArraySubset($expectedData, $actualData);
+    }
+
+    public function testHostIteration()
+    {
+        $expectedData = [
+            'a:b:c:d:e:f::/128' => [
+                '0: a:b:c:d:e:f::/128',
+            ],
+            'a:b:c:d:e:f::/127' => [
+                '0: a:b:c:d:e:f::/128',
+                '1: a:b:c:d:e:f::1/128',
+            ],
+            'a:b:c:d:e:f::/126' => [
+                '0: a:b:c:d:e:f::/128',
+                '1: a:b:c:d:e:f::1/128',
+                '2: a:b:c:d:e:f::2/128',
+                '3: a:b:c:d:e:f::3/128',
+            ],
+        ];
+
+        foreach ($expectedData as $ip => $data) {
+            $actualData = [];
+            $subnet = IPv6::create($ip);
+
+            foreach (new HostIterator($subnet) as $index => $address) {
+                $actualData[] = sprintf('%d: %s', $index, $address);
+            }
+
+            $this->assertArraySubset($data, $actualData);
+        }
     }
 }

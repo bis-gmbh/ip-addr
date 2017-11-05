@@ -7,6 +7,7 @@
  */
 
 use IPAddr\v4 as IPv4;
+use IPAddr\HostIterator;
 
 class IPv4Test extends PHPUnit_Framework_TestCase
 {
@@ -337,5 +338,33 @@ class IPv4Test extends PHPUnit_Framework_TestCase
         }
 
         $this->assertArraySubset($expectedData, $actualData);
+    }
+
+    public function testHostIteration()
+    {
+        $expectedData = [
+            '192.168.0.0/32' => [
+                '0: 192.168.0.0/32',
+            ],
+            '192.168.0.1/31' => [
+                '0: 192.168.0.1/32',
+            ],
+            '192.168.0.2/30' => [
+                '0: 192.168.0.1/32',
+                '1: 192.168.0.2/32',
+            ],
+        ];
+
+        foreach ($expectedData as $ip => $data) {
+            $actualData = [];
+
+            $subnet = IPv4::create($ip);
+
+            foreach (new HostIterator($subnet) as $index => $address) {
+                $actualData[] = sprintf('%d: %s', $index, $address);
+            }
+
+            $this->assertArraySubset($data, $actualData);
+        }
     }
 }

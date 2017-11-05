@@ -1,14 +1,10 @@
-# IP-Addr library manages IPv4 and IPv6 addresses and subnets
+<?php
 
-How to install:
+// cmd script for testing code from readme examples
+// run command> php tests/readme.php
 
-```
-composer require --dev bis-gmbh/ip-addr ^0.3
-```
+require 'vendor/autoload.php';
 
-Usage example:
-
-```php
 use \IPAddr\Utils as IP;
 use \IPAddr\HostIterator;
 
@@ -29,19 +25,3 @@ if ($providerSubnet->contains($userSubnet)) {
         printf("%d: %s\n", $index, $ip->addr());
     }
 }
-```
-
-Will output:
-
-```
-User network: 10.100.0.0
-User broadcast: 10.100.0.3
-User addrs:
-0: 10.100.0.0
-1: 10.100.0.1
-2: 10.100.0.2
-3: 10.100.0.3
-User hosts:
-0: 10.100.0.1
-1: 10.100.0.2
-```
