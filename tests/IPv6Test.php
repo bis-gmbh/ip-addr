@@ -6,8 +6,8 @@
  * @copyright 2014-2017 Barzmann Internet Solutions GmbH
  */
 
-use IPAddr\v6 as IPv6;
-use IPAddr\HostIterator;
+use \BIS\IPAddr\v6 as IPv6;
+use \BIS\IPAddr\HostIterator;
 
 class IPv6Test extends PHPUnit_Framework_TestCase
 {

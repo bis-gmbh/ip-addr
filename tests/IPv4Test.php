@@ -6,8 +6,8 @@
  * @copyright 2014-2017 Barzmann Internet Solutions GmbH
  */
 
-use IPAddr\v4 as IPv4;
-use IPAddr\HostIterator;
+use \BIS\IPAddr\v4 as IPv4;
+use \BIS\IPAddr\HostIterator;
 
 class IPv4Test extends PHPUnit_Framework_TestCase
 {

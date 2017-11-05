@@ -6,7 +6,7 @@
  * @copyright 2014-2017 Barzmann Internet Solutions GmbH
  */
 
-namespace IPAddr;
+namespace BIS\IPAddr;
 
 abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
 {

@@ -9,8 +9,8 @@ composer require --dev bis-gmbh/ip-addr ^0.3
 Usage example:
 
 ```php
-use \IPAddr\Utils as IP;
-use \IPAddr\HostIterator;
+use \BIS\IPAddr\Utils as IP;
+use \BIS\IPAddr\HostIterator;
 
 $providerSubnet = IP::make('10/8');
 

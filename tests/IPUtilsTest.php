@@ -6,7 +6,7 @@
  * @copyright 2014-2017 Barzmann Internet Solutions GmbH
  */
 
-use IPAddr\Utils as IP;
+use \BIS\IPAddr\Utils as IP;
 
 class IPUtilsTest extends PHPUnit_Framework_TestCase
 {
