@@ -80,16 +80,17 @@ class v4 extends BaseAddress
         ]
     ];
 
+    protected static $version = 4;
+    protected static $maxPrefixLength = 32;
+
     protected static $octetCount = 4;
     protected static $octetOffsets = [24, 16, 8, 0];
     protected static $octetMasks = [0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF];
 
     public function __construct($anyFormat = null, $mask = null)
     {
-        $this->version = 4;
         $this->addr = 0;
         $this->mask = 0xFFFFFFFF;
-        $this->maxPrefixLength = 32;
 
         if ($anyFormat !== null) {
             $this->assign($anyFormat, $mask);
@@ -150,11 +151,11 @@ class v4 extends BaseAddress
     {
         $bitsCount = 0;
 
-        for ($i=0; $i<$this->maxPrefixLength; $i++) {
+        for ($i=0; $i<self::$maxPrefixLength; $i++) {
             $bitsCount += ($this->not($this->mask) >> $i) & 1;
         }
 
-        return $this->maxPrefixLength - $bitsCount;
+        return self::$maxPrefixLength - $bitsCount;
     }
 
     /**
@@ -177,7 +178,7 @@ class v4 extends BaseAddress
     {
         $prefixLength = $this->prefixLength();
 
-        if ($prefixLength === $this->maxPrefixLength) {
+        if ($prefixLength === self::$maxPrefixLength) {
             return 1;
         } else if ($prefixLength === 0) {
             return $this->not($this->mask);
@@ -350,8 +351,8 @@ class v4 extends BaseAddress
     {
         $mask = 0xFFFFFFFF;
 
-        if ($prefixLength < $this->maxPrefixLength) {
-            $mask <<= ($this->maxPrefixLength - $prefixLength);
+        if ($prefixLength < self::$maxPrefixLength) {
+            $mask <<= (self::$maxPrefixLength - $prefixLength);
         }
 
         return (PHP_INT_SIZE == 8 ? $mask & 0x00000000FFFFFFFF : $mask);
@@ -361,7 +362,7 @@ class v4 extends BaseAddress
     {
         $commonMask = 0;
 
-        for ($i = $this->maxPrefixLength; $i >= 0; $i--) {
+        for ($i = self::$maxPrefixLength; $i >= 0; $i--) {
             $commonMask = $this->maskFromPrefixLength($i);
             $newNetworkAddr = $firstAddr & $commonMask;
             $newBroadcastAddr = $newNetworkAddr + $this->not($commonMask);

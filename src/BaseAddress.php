@@ -10,10 +10,11 @@ namespace BIS\IPAddr;
 
 abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
 {
-    protected $version;
+    protected static $version;
+    protected static $maxPrefixLength;
+
     protected $addr;
     protected $mask;
-    protected $maxPrefixLength;
 
     /**
      * @param Address $addr
@@ -48,7 +49,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
 
     public function version()
     {
-        return $this->version;
+        return static::$version;
     }
 
     public static function create($anyFormat = null, $mask = null)
@@ -157,7 +158,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
      */
     public function hostBits()
     {
-        return $this->maxPrefixLength - $this->prefixLength();
+        return static::$maxPrefixLength - $this->prefixLength();
     }
 
     /**

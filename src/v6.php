@@ -34,6 +34,9 @@ class v6 extends BaseAddress
         ]
     ];
 
+    protected static $version = 6;
+    protected static $maxPrefixLength = 128;
+
     public function __construct($anyFormat = null, $mask = null)
     {
         if ( ! defined('AF_INET6')) {
@@ -43,10 +46,8 @@ class v6 extends BaseAddress
             throw new \RuntimeException('Extension GMP not loaded');
         }
 
-        $this->version = 6;
         $this->addr = gmp_init(0);
         $this->mask = gmp_init('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-        $this->maxPrefixLength = 128;
 
         if ($anyFormat !== null) {
             $this->assign($anyFormat, $mask);
@@ -127,7 +128,7 @@ class v6 extends BaseAddress
     {
         for (
             $i = 0, $bitsCount = 0;
-            $i < $this->maxPrefixLength;
+            $i < self::$maxPrefixLength;
             gmp_testbit($this->mask, $i) ? $bitsCount++ : null, $i++
         );
 
@@ -157,7 +158,7 @@ class v6 extends BaseAddress
     {
         $prefixLength = $this->prefixLength();
 
-        if ($prefixLength === $this->maxPrefixLength) {
+        if ($prefixLength === self::$maxPrefixLength) {
             $num = gmp_init(1);
         } else if ($prefixLength === 0) {
             $num = $this->gmp_not($this->mask);
@@ -456,7 +457,7 @@ class v6 extends BaseAddress
     {
         for (
             $i = 0, $mask = gmp_init('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-            $i < ($this->maxPrefixLength - $prefixLength);
+            $i < (self::$maxPrefixLength - $prefixLength);
             gmp_clrbit($mask, $i), $i++
         );
 
@@ -467,7 +468,7 @@ class v6 extends BaseAddress
     {
         $commonMask = gmp_init(0);
 
-        for ($i = $this->maxPrefixLength; $i >= 0; $i--) {
+        for ($i = self::$maxPrefixLength; $i >= 0; $i--) {
             $commonMask = $this->maskFromPrefixLength($i);
             $newNetworkAddr = gmp_and($firstAddr, $commonMask);
             $newBroadcastAddr = gmp_add($newNetworkAddr, $this->gmp_not($commonMask));
@@ -506,7 +507,7 @@ class v6 extends BaseAddress
     {
         for (
             $i = 0, $notValue = gmp_init(0);
-            $i < $this->maxPrefixLength;
+            $i < self::$maxPrefixLength;
             gmp_testbit($value, $i) ? gmp_clrbit($notValue, $i) : gmp_setbit($notValue, $i), $i++
         );
 
