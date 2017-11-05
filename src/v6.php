@@ -209,14 +209,15 @@ class v6 extends BaseAddress
         return $this->toTextual($this->internalFirstAddr()) . ' - ' . self::toTextual($this->internalLastAddr());
     }
 
+    /**
+     * @see https://www.ripe.net/manage-ips-and-asns/db/support/configuring-reverse-dns
+     * @return string
+     */
     public function reverse()
     {
-        // reverse v4 part, if exists
-        $octets = explode('.', self::toTextual($this->addr));
-        $reversedV4Part = implode('.', array_reverse($octets));
+        $reversedHex = strrev(str_pad(gmp_strval($this->addr, 16), 32, '0', STR_PAD_LEFT));
 
-        $groups = explode(':', $reversedV4Part);
-        return implode(':', array_reverse($groups)) . '.ip6.arpa.';
+        return implode('.', str_split($reversedHex)) . '.ip6.arpa.';
     }
 
     public function reverseMask()

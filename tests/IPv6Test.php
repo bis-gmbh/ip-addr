@@ -246,12 +246,12 @@ class IPv6Test extends PHPUnit_Framework_TestCase
 
     public function testReverse()
     {
-        $this->assertEquals(IPv6::create('::/0')->reverse(), '::.ip6.arpa.');
-        $this->assertEquals(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')->reverse(), 'ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff.ip6.arpa.');
-        $this->assertEquals(IPv6::create('ffff:ffff:ffff:ffff::/64')->reverse(), '::ffff:ffff:ffff:ffff.ip6.arpa.');
-        $this->assertEquals(IPv6::create('2a02:6b8::2:242/30')->reverse(), '242:2::6b8:2a02.ip6.arpa.');
-        $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64/4')->reverse(), '64::c0f:4010:1450:2a00.ip6.arpa.');
-        $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64:1.2.3.4/4')->reverse(), '304:102:64::c0f:4010:1450:2a00.ip6.arpa.');
+        $this->assertEquals(IPv6::create('::/0')->reverse(), '0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa.');
+        $this->assertEquals(IPv6::create('ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128')->reverse(), 'f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.ip6.arpa.');
+        $this->assertEquals(IPv6::create('ffff:ffff:ffff:ffff::/64')->reverse(), '0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.f.ip6.arpa.');
+        $this->assertEquals(IPv6::create('2a02:6b8::2:242/30')->reverse(), '2.4.2.0.2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.6.0.2.0.a.2.ip6.arpa.');
+        $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64/4')->reverse(), '4.6.0.0.0.0.0.0.0.0.0.0.0.0.0.0.f.0.c.0.0.1.0.4.0.5.4.1.0.0.a.2.ip6.arpa.');
+        $this->assertEquals(IPv6::create('2a00:1450:4010:c0f::64:1.2.3.4/4')->reverse(), '4.0.3.0.2.0.1.0.4.6.0.0.0.0.0.0.f.0.c.0.0.1.0.4.0.5.4.1.0.0.a.2.ip6.arpa.');
     }
 
     public function testNetType()
