@@ -10,4 +10,12 @@ namespace BIS\IPAddr;
 
 class HostIterator extends AddressIterator
 {
+    /**
+     * @param int $version
+     * @return string
+     */
+    protected function iteratorClassName($version)
+    {
+        return sprintf('\BIS\IPAddr\Iterator\v%d\Host', $version);
+    }
 }

@@ -17,14 +17,21 @@ class AddressIterator implements \Iterator
 
     public function __construct(Address $subnet)
     {
-        $iteratorClassName = sprintf(
-            '\BIS\IPAddr\Iterator\v%d\Address', $subnet->version()
-        );
+        $iteratorClassName = $this->iteratorClassName($subnet->version());
         if (class_exists($iteratorClassName)) {
             $this->iterator = new $iteratorClassName($subnet);
         } else {
-            throw new \InvalidArgumentException('Unimlemented iterator for this subnet type');
+            throw new \InvalidArgumentException('Unimplemented iterator for given version');
         }
+    }
+
+    /**
+     * @param int $version
+     * @return string
+     */
+    protected function iteratorClassName($version)
+    {
+        return sprintf('\BIS\IPAddr\Iterator\v%d\Address', $version);
     }
 
     /**
