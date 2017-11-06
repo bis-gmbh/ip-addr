@@ -3,7 +3,7 @@
 How to install:
 
 ```
-composer require --dev bis-gmbh/ip-addr ^0.4
+composer require --dev bis-gmbh/ip-addr ^0.5
 ```
 
 Usage example:
@@ -29,6 +29,12 @@ if ($providerSubnet->contains($userSubnet)) {
         printf("%d: %s\n", $index, $ip->addr());
     }
 }
+
+printf("Provider subnets:\n");
+$providerSubnets = new SubnetIterator($providerSubnet, 10);
+foreach ($providerSubnets as $index => $subnet) {
+    printf("%d: %s\n", $index, $subnet->cidr());
+}
 ```
 
 Will output:
@@ -44,4 +50,9 @@ User addrs:
 User hosts:
 0: 10.100.0.1
 1: 10.100.0.2
+Provider subnets:
+0: 10.0.0.0/10
+1: 10.64.0.0/10
+2: 10.128.0.0/10
+3: 10.192.0.0/10
 ```

@@ -8,6 +8,7 @@
 
 use \BIS\IPAddr\v6 as IPv6;
 use \BIS\IPAddr\HostIterator;
+use \BIS\IPAddr\SubnetIterator;
 
 class IPv6Test extends PHPUnit_Framework_TestCase
 {
@@ -379,5 +380,24 @@ class IPv6Test extends PHPUnit_Framework_TestCase
 
             $this->assertArraySubset($data, $actualData);
         }
+    }
+
+    public function testSubnetIteration()
+    {
+        $expectedData = [
+            '0: a:b:c:d::/66',
+            '1: a:b:c:d:4000::/66',
+            '2: a:b:c:d:8000::/66',
+            '3: a:b:c:d:c000::/66',
+        ];
+        $actualData = [];
+
+        $net = new SubnetIterator(IPv6::create('a:b:c:d::/64'), 66);
+
+        foreach ($net as $index => $subnet) {
+            $actualData[] = sprintf('%s: %s', $index, $subnet->cidr());
+        }
+
+        $this->assertArraySubset($expectedData, $actualData);
     }
 }

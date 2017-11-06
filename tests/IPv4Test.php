@@ -8,6 +8,7 @@
 
 use \BIS\IPAddr\v4 as IPv4;
 use \BIS\IPAddr\HostIterator;
+use \BIS\IPAddr\SubnetIterator;
 
 class IPv4Test extends PHPUnit_Framework_TestCase
 {
@@ -366,5 +367,24 @@ class IPv4Test extends PHPUnit_Framework_TestCase
 
             $this->assertArraySubset($data, $actualData);
         }
+    }
+
+    public function testSubnetIteration()
+    {
+        $expectedData = [
+            '0: 192.168.0.0/18',
+            '1: 192.168.64.0/18',
+            '2: 192.168.128.0/18',
+            '3: 192.168.192.0/18',
+        ];
+        $actualData = [];
+
+        $net = new SubnetIterator(IPv4::create('192.168/16'), 18);
+
+        foreach ($net as $index => $subnet) {
+            $actualData[] = sprintf('%d: %s', $index, $subnet->cidr());
+        }
+
+        $this->assertArraySubset($expectedData, $actualData);
     }
 }
