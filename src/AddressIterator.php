@@ -11,19 +11,20 @@ namespace BIS\IPAddr;
 class AddressIterator implements \Iterator
 {
     /**
-     * @var int
+     * @var \Iterator
      */
-    protected $index;
-
-    /**
-     * @var Address
-     */
-    protected $subnet;
+    protected $iterator;
 
     public function __construct(Address $subnet)
     {
-        $this->index = 0;
-        $this->subnet = $subnet;
+        $iteratorClassName = sprintf(
+            '\BIS\IPAddr\Iterator\v%d\Address', $subnet->version()
+        );
+        if (class_exists($iteratorClassName)) {
+            $this->iterator = new $iteratorClassName($subnet);
+        } else {
+            throw new \InvalidArgumentException('Unimlemented iterator for this subnet type');
+        }
     }
 
     /**
@@ -31,7 +32,7 @@ class AddressIterator implements \Iterator
      */
     public function current()
     {
-        return $this->subnet[$this->index];
+        return $this->iterator->current();
     }
 
     /**
@@ -39,24 +40,24 @@ class AddressIterator implements \Iterator
      */
     public function valid()
     {
-        return isset($this->subnet[$this->index]);
+        return $this->iterator->valid();
     }
 
     public function next()
     {
-        ++$this->index;
+        $this->iterator->next();
     }
 
     public function rewind()
     {
-        $this->index = 0;
+        $this->iterator->rewind();
     }
 
     /**
-     * @return int
+     * @return int|string
      */
     public function key()
     {
-        return $this->index;
+        return $this->iterator->key();
     }
 }

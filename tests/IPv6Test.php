@@ -341,10 +341,14 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         $subnet = IPv6::create('a:b:c:d:e:f::1 - a:b:c:d:e:f::2'); // a:b:c:d:e:f::/126
 
         foreach ($subnet as $index => $address) {
-            $actualData[] = sprintf('%d: %s', $index, $address);
+            $actualData[] = sprintf('%s: %s', $index, $address);
         }
 
         $this->assertArraySubset($expectedData, $actualData);
+
+        $subnet->assign('a:b::/32');
+        $this->assertEquals($subnet['0']->addr(), 'a:b::');
+        $this->assertEquals($subnet['79228162514264337593543950335']->addr(), 'a:b:ffff:ffff:ffff:ffff:ffff:ffff');
     }
 
     public function testHostIteration()

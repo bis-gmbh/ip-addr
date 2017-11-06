@@ -6,8 +6,8 @@
  * @copyright 2014-2017 Barzmann Internet Solutions GmbH
  */
 
-namespace BIS\IPAddr;
+namespace BIS\IPAddr\Iterator\v6;
 
-class HostIterator extends AddressIterator
+class Host extends Address
 {
 }

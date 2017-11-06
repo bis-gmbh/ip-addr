@@ -245,7 +245,7 @@ class v6 extends BaseAddress
     }
 
     /**
-     * @param int $offset
+     * @param mixed $offset
      * @return bool
      */
     public function offsetExists($offset)
@@ -254,7 +254,7 @@ class v6 extends BaseAddress
     }
 
     /**
-     * @param int $offset
+     * @param mixed $offset
      * @return v6
      */
     public function offsetGet($offset)
