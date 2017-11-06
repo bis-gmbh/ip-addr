@@ -10,12 +10,16 @@ namespace BIS\IPAddr;
 
 class HostIterator extends AddressIterator
 {
-    /**
-     * @param int $version
-     * @return string
-     */
-    protected function iteratorClassName($version)
+    public function __construct(Address $subnet)
     {
-        return sprintf('\BIS\IPAddr\Iterator\v%d\Host', $version);
+        parent::__construct($subnet);
+
+        // overwrite iterator object
+        $iteratorClassName = sprintf('\BIS\IPAddr\Iterator\v%d\Host', $subnet->version());
+        if (class_exists($iteratorClassName)) {
+            $this->iterator = new $iteratorClassName($subnet);
+        } else {
+            throw new \InvalidArgumentException('Unimplemented iterator for given version');
+        }
     }
 }
