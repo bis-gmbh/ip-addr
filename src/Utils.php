@@ -14,34 +14,30 @@ class Utils
      * @param mixed $anyFormat
      * @param string|null $maskString
      * @param int|null $version
-     * @return false|v4|v6
+     * @return v4|v6
+     * @throws \InvalidArgumentException
      */
     public static function make($anyFormat, $maskString = null, $version = null)
     {
-        $addr = false;
-
-        switch ($version) {
-            case 4:
-                $addr = v4::create($anyFormat, $maskString);
-                break;
-            case 6:
-                $addr = v6::create($anyFormat, $maskString);
-                break;
-            default: // let's try to guess
-                if (
-                    v6::isRange($anyFormat) || v6::isCIDR($anyFormat)
-                    || v6::isTextual($anyFormat) || v6::isNumeric($anyFormat)
-                ) {
-                    $addr = v6::create($anyFormat, $maskString);
-                } else if (
-                    v4::isRange($anyFormat) || v4::isCIDR($anyFormat)
-                    || v4::isTextual($anyFormat) || v4::isNumeric($anyFormat)
-                ) {
-                    $addr = v4::create($anyFormat, $maskString);
-                }
+        if ($version == 4) {
+            return v4::create($anyFormat, $maskString);
+        } else if ($version == 6) {
+            return v6::create($anyFormat, $maskString);
+        } else { // let's try to guess
+            if (
+                v6::isRange($anyFormat) || v6::isCIDR($anyFormat)
+                || v6::isTextual($anyFormat) || v6::isNumeric($anyFormat)
+            ) {
+                return v6::create($anyFormat, $maskString);
+            } else if (
+                v4::isRange($anyFormat) || v4::isCIDR($anyFormat)
+                || v4::isTextual($anyFormat) || v4::isNumeric($anyFormat)
+            ) {
+                return v4::create($anyFormat, $maskString);
+            }
         }
 
-        return $addr;
+        throw new \InvalidArgumentException('Wrong arguments');
     }
 
     public static function info(Address $addr)

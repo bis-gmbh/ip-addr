@@ -63,6 +63,9 @@ class IPUtilsTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(IP::make('192.168.0.255 - 192.168.1.255'), '192.168.0.255/23');
         $this->assertEquals(IP::make('2a00:1450:4010:c0f::64 - 2fff::'), '2a00:1450:4010:c0f::64/5');
+
+        $this->expectException('InvalidArgumentException');
+        $this->assertEquals(IP::make(-1), '');
     }
 
     public function testInfo()
