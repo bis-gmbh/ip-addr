@@ -61,8 +61,14 @@ class v6 extends BaseAddress
     public static function isNumeric($value)
     {
         return (
-            (is_string($value) || is_numeric($value))
-            && preg_match('/^(0|0x)?[0-9a-f]+$/i', $value)
+            (is_int($value) && $value >= 0) || 
+            (
+                is_string($value) &&
+                preg_match(
+                    '/(^0b[01]+$)|(^0[0-7]+$)|(^0[xX][0-9a-fA-F]+$)|((^[1-9][0-9]*$)|(^0$))/',
+                    $value
+                )
+            )
         );
     }
 

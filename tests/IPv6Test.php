@@ -26,8 +26,20 @@ class IPv6Test extends PHPUnit_Framework_TestCase
         $this->assertFalse(IPv6::isNumeric(true));
         $this->assertFalse(IPv6::isNumeric('127.0.0.1'));
         $this->assertFalse(IPv6::isNumeric(-1));
+        $this->assertFalse(IPv6::isNumeric('O'));
+        $this->assertFalse(IPv6::isNumeric(''));
+        $this->assertFalse(IPv6::isNumeric('  1   '));
+        $this->assertFalse(IPv6::isNumeric('0785546253416351725365456175346256735461341'));
+        $this->assertFalse(IPv6::isNumeric('0B000101001101111001010001010101111011000100101000101010'));
         $this->assertTrue(IPv6::isNumeric(0));
         $this->assertTrue(IPv6::isNumeric(4294967296));
+        $this->assertTrue(IPv6::isNumeric('0'));
+        $this->assertTrue(IPv6::isNumeric('07765723726537257656357452763457652635745267354'));
+        $this->assertTrue(IPv6::isNumeric('12372637426738462738462736487268346287364726834'));
+        $this->assertTrue(IPv6::isNumeric('0x123afffe340045ff'));
+        $this->assertTrue(IPv6::isNumeric('0X123Afffe340045ff'));
+        $this->assertTrue(IPv6::isNumeric('0b1110000101000101010010101010010100101010000010101001001001'));
+        $this->assertTrue(IPv6::isNumeric('0'));
     }
 
     public function testIsTextual()
