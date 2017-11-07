@@ -10,12 +10,12 @@ namespace BIS\IPAddr;
 
 class v4 extends BaseAddress
 {
-    const REGEXP_IP = '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){0,3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i';
-    const REGEXP_CIDR = '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){0,3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/([0-9]|1[0-9]|2[0-9]|3[0-2])$/i';
+    const REGEXP_IP = '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){1,3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/i';
+    const REGEXP_CIDR = '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){1,3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\/([0-9]|1[0-9]|2[0-9]|3[0-2])$/i';
 
-    public static $privateNetworks = ['10/8', '172.16/12', '192.168/16']; // rfc1918
-    public static $multicastNetworks = ['224/4']; // rfc3171
-    public static $reservedNetworks = ['240/4']; // rfc1112
+    public static $privateNetworks = ['10.0/8', '172.16/12', '192.168/16']; // rfc1918
+    public static $multicastNetworks = ['224.0/4']; // rfc3171
+    public static $reservedNetworks = ['240.0/4']; // rfc1112
     public static $networkTypes = [ // rfc5735
         [
             'AddressBlock' => '0.0.0.0/8',
@@ -98,12 +98,13 @@ class v4 extends BaseAddress
     }
 
     /**
-     * @param mixed $long
+     * @param mixed $value
      * @return bool
      */
-    public static function isNumeric($long)
+    public static function isNumeric($value)
     {
-        return is_int($long) && ($long >= 0 && $long <= 0xFFFFFFFF);
+        $value = self::convertToLongIfString($value);
+        return is_int($value) && ($value >= 0 && $value <= 0xFFFFFFFF);
     }
 
     /**
@@ -122,6 +123,32 @@ class v4 extends BaseAddress
     public static function isCIDR($cidr)
     {
         return is_string($cidr) && (bool)preg_match(self::REGEXP_CIDR, $cidr);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function fromNumeric($value)
+    {
+        return self::convertToLongIfString($value);
+    }
+
+    protected static function convertToLongIfString($value)
+    {
+        if (is_string($value)) {
+            if (preg_match('/^0b[01]+$/', $value)) {
+                $value = bindec($value);
+            } else if (preg_match('/^0[0-7]+$/', $value)) {
+                $value = octdec($value);
+            } else if (preg_match('/^0[xX][0-9a-fA-F]+$/', $value)) {
+                $value = hexdec($value);
+            } else if (preg_match('/(^[1-9][0-9]*$)|(^0$)/', $value)) {
+                $value = intval($value);
+            }
+        }
+
+        return $value;
     }
 
     /**

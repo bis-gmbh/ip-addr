@@ -9,7 +9,7 @@ use \BIS\IPAddr\Utils as IP;
 use \BIS\IPAddr\HostIterator;
 use \BIS\IPAddr\SubnetIterator;
 
-$providerSubnet = IP::make('10/8');
+$providerSubnet = IP::make('10.0/8');
 
 $userSubnet = IP::make('10.100.0.2/30');
 

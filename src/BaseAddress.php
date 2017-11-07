@@ -29,6 +29,12 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
     abstract public function gtEq(Address $addr);
 
     /**
+     * @param mixed $value
+     * @return mixed
+     */
+    abstract protected function fromNumeric($value);
+
+    /**
      * @param string $value
      * @return mixed
      */
@@ -54,7 +60,7 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
 
     public static function create($anyFormat = null, $mask = null)
     {
-        return new static($anyFormat, $mask);
+        return new static($anyFormat === null ? 0 : $anyFormat, $mask);
     }
 
     public function assign($anyFormat, $maskString = null)
@@ -142,15 +148,6 @@ abstract class BaseAddress implements Address, \ArrayAccess, \IteratorAggregate
         }
 
         return false;
-    }
-
-    /**
-     * @param mixed $value
-     * @return mixed
-     */
-    protected function fromNumeric($value)
-    {
-        return $value;
     }
 
     /**
