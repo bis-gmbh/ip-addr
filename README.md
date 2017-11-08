@@ -84,17 +84,17 @@ public static function create ( $anyFormat [, string $maskString = null ] ) : Ad
 ###### Parameters
 
 - *anyFormat*
-  - integer, e.g. 123, 0xABCDEF00, 075227, 0b0101010
-  - numeric string, e.g. '123', '0xABCDEF00', '075227', '0b0101010'
-  - textual format
-    - v4, '192.168.10.1', '172.16.3', '10.0'
-    - v6, 'a\:b:c:d::', '::', '::345d:10.40.60.1'
-  - CIDR format
-    - v4, '10.0.0.0/8', '192.168/16'
-    - v6, '2000\:b:c:d::/64', '::1/128'
+  - integer, e.g. `123`, `0xABCDEF00`, `075227`, `0b0101010`
+  - numeric string, e.g. `'123'`, `'0xABCDEF00'`, `'075227'`, `'0b0101010'`
+  - textual format:
+    - v4, `'192.168.10.1'`, `'172.16.3'`, `'10.0'`
+    - v6, `'a:b:c:d::'`, `'::'`, `'::345d:10.40.60.1'`
+  - CIDR format:
+    - v4, `'10.0.0.0/8'`, `'192.168/16'`
+    - v6, `'2000:b:c:d::/64'`, `'::1/128'`
   - range format `<first_addr> - <second_addr>`, where `<first_addr>` and `<second_addr>` - addresses in textual format with the same ip version
-    - v4 '10.0.0.0 - 10.0.0.255'
-    - v6 '2000\:b:c:d::5d - 2000\:b:c:d::ff'
+    - v4 `'10.0.0.0 - 10.0.0.255'`
+    - v6 `'2000:b:c:d::5d - 2000:b:c:d::ff'`
 
 ###### Return values
 
@@ -104,7 +104,7 @@ Returns a `Address` object on success
 
 ```php
 $v4instance = v4::create('127.0.0.1');
-#v6instance = v6::create('::1');
+$v6instance = v6::create('::1');
 ```
 
 #### new v4 | new v6
@@ -117,7 +117,7 @@ Creates a `Address` instances by **new** operator with the same parameters as th
 
 ```php
 $v4instance = new v4('127.0.0.1');
-#v6instance = new v6('::1');
+$v6instance = new v6('::1');
 ```
 
 ### Class
