@@ -8,6 +8,8 @@ require 'vendor/autoload.php';
 use \BIS\IPAddr\Utils as IP;
 use \BIS\IPAddr\HostIterator;
 use \BIS\IPAddr\SubnetIterator;
+use \BIS\IPAddr\v4;
+use \BIS\IPAddr\v6;
 
 $providerSubnet = IP::make('10.0/8');
 
@@ -32,3 +34,23 @@ $providerSubnets = new SubnetIterator($providerSubnet, 10);
 foreach ($providerSubnets as $index => $subnet) {
     printf("%d: %s\n", $index, $subnet->cidr());
 }
+
+var_dump(v4::isNumeric(0xFF000000));
+var_dump(v4::isNumeric('0xFF000000'));
+var_dump(v4::isNumeric('abcdef'));
+var_dump(v4::isNumeric(true));
+
+var_dump(v6::isTextual('1111:2222::5555:6666:7777:8888'));
+var_dump(v6::isTextual('::ffff:2.3.4.0'));
+var_dump(v6::isTextual('::/'));
+var_dump(v6::isTextual('::ffff:2.3.4'));
+
+var_dump(v6::isCIDR('2000:2222::5555:6666:7777:8888/64'));
+var_dump(v6::isCIDR('::/128'));
+var_dump(v6::isCIDR('::'));
+var_dump(v6::isCIDR('::/129'));
+
+var_dump(v4::isRange('10.0 - 10.10'));
+var_dump(v4::isRange('192.168.0.1-   192.168.255.255'));
+var_dump(v4::isRange('127.0.0.0-'));
+var_dump(v4::isRange('127.0.0.0-::1'));
