@@ -92,9 +92,12 @@ public static function create ( $anyFormat [, string $maskString = null ] ) : Ad
   - CIDR format:
     - v4, `'10.0.0.0/8'`, `'192.168/16'`
     - v6, `'2000:b:c:d::/64'`, `'::1/128'`
-  - range format `<first_addr> - <second_addr>`, where `<first_addr>` and `<second_addr>` - addresses in textual format with the same ip version
+  - range format `'<first_addr> - <second_addr>'`, where `<first_addr>` and `<second_addr>` - addresses in textual format with the same ip version
     - v4 `'10.0.0.0 - 10.0.0.255'`
     - v6 `'2000:b:c:d::5d - 2000:b:c:d::ff'`
+- *maskString* network mask in textual format, allow if *anyFormat* parameter also in textual format
+    - v4 `'255.255.255.0'`, `'255.0'`
+    - v6 `'ffff:ffff:ffff:ffff::'`
 
 ###### Return values
 
@@ -104,6 +107,7 @@ Returns a `Address` object on success
 
 ```php
 $v4instance = v4::create('127.0.0.1');
+$v4subnet = v4::create('192.168.0.1', '255.255.255.0');
 $v6instance = v6::create('::1');
 ```
 
@@ -230,7 +234,7 @@ bool(false)
 public static function isRange ( $value ) : bool;
 ```
 
-Checks if the parameter *value* present in range format. Allows any order of addresses - direct or reverse, e.g. '10.0.0.255 - 10.0.0.0' is allowed range.
+Checks if the parameter *value* present in range format. Allows any order of addresses - direct or reverse, e.g. `'10.0.0.255 - 10.0.0.0'` is allowed range.
 
 ###### Parameters
 
