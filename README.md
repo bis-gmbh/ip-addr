@@ -476,7 +476,7 @@ TODO
 
 ### Exceptions
 
-Library classes and objects can throw exceptions of the following types:
+Static methods and methods of objects can throw exceptions of the following types:
 
 - `\InvalidArgumentException` when calling a method with incorrect arguments;
 - `\DomainException` when trying to use language constructs that do not apply to address objects, for example, overwriting an element when accessing an array by index key;
