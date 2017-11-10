@@ -332,7 +332,7 @@ Assigns new address and mask values for the current object.
 
 ###### Parameters
 
-See [create](#v4create--v6create) method.
+See [create](#small_blue_diamond-v4create--v6create) method.
 
 ###### Examples
 
