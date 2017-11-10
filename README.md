@@ -336,7 +336,7 @@ See [create](#small_blue_diamond-v4create--v6create) method.
 
 ###### Examples
 
-```
+```php
 $ip = v4::create('127.0.0.1');
 var_dump($ip->addr());
 $ip->assign('192.168.0.1');
@@ -482,7 +482,7 @@ Library classes and objects can throw exceptions of the following types:
 - `\DomainException` when trying to use language constructs that do not apply to address objects, for example, overwriting an element when accessing an array by index key;
 - `\RuntimeException` when the library classes can not work in the current environment, for example, PHP GMP extension not installed.
 
-```
+```php
 try {
     $ip = v6::create('invalid addr');
 } catch (\InvalidArgumentException $e) {
@@ -508,10 +508,86 @@ Read-only access
 
 #### Methods
 
-##### make
+##### :small_blue_diamond: make
 
-TODO
+###### Description
 
-##### info
+```
+public static function make ( $anyFormat [, string $maskString = null ] ) : Address
+```
 
-TODO
+Trying to create an object of any of the versions based on the provided arguments
+
+###### Parameters
+
+See [create](#small_blue_diamond-v4create--v6create) method.
+
+###### Return values
+
+Returns a `Address` object on success
+
+###### Examples
+
+```php
+use \BIS\IPAddr\Utils as IP;
+
+var_dump(IP::make('127.0.0.1')->version());
+var_dump(IP::make('::1')->version());
+```
+
+```
+int(4)
+int(6)
+```
+
+##### :small_blue_diamond: info
+
+###### Description
+
+```
+public static function info ( Address $addr ) : array
+```
+
+###### Parameters
+
+*addr* - `v4` or `v6` object
+
+###### Return values
+
+Returns the array with summary information about given address.
+
+###### Examples
+
+```php
+use \BIS\IPAddr\Utils as IP;
+
+$ip = IP::make('127.0.0.1/8');
+echo json_encode(IP::info($ip), JSON_PRETTY_PRINT) . PHP_EOL;
+```
+
+```
+{
+    "ver": 4,
+    "host": {
+        "addr": "127.0.0.1",
+        "bin": "0b01111111000000000000000000000001",
+        "dec": 2130706433,
+        "hex": "0x7f000001",
+        "raddr": "1.0.0.127.in-addr.arpa.",
+        "type": "Loopback"
+    },
+    "net": {
+        "cidr": "127.0.0.1\/8",
+        "range": "127.0.0.0 - 127.255.255.255",
+        "masklen": 8,
+        "hostbits": 24,
+        "mask": "255.0.0.0",
+        "rmask": "0.0.0.255",
+        "addrs": 16777216,
+        "hosts": 16777214,
+        "network": "127.0.0.0",
+        "broadcast": "127.255.255.255",
+        "class": "A"
+    }
+}
+```

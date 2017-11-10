@@ -76,3 +76,9 @@ try {
 } catch (\DomainException $e) {
     echo $e->getMessage() . PHP_EOL;
 }
+
+var_dump(IP::make('127.0.0.1')->version());
+var_dump(IP::make('::1')->version());
+
+$ip = IP::make('127.0.0.1/8');
+echo json_encode(IP::info($ip), JSON_PRETTY_PRINT) . PHP_EOL;
