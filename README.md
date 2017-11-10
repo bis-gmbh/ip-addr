@@ -73,7 +73,7 @@ TODO
 
 ### Constructor
 
-#### v4::create | v6::create
+#### :small_blue_diamond: v4::create | v6::create
 
 ###### Description
 
@@ -111,7 +111,7 @@ $v4subnet = v4::create('192.168.0.1', '255.255.255.0');
 $v6instance = v6::create('::1');
 ```
 
-#### new v4 | new v6
+#### :small_blue_diamond: new v4 | new v6
 
 ###### Description
 
@@ -128,7 +128,7 @@ $v6instance = new v6('::1');
 
 #### Methods
 
-##### v4::isNumeric | v6::isNumeric
+##### :small_blue_diamond: v4::isNumeric | v6::isNumeric
 
 ###### Description
 
@@ -162,7 +162,7 @@ bool(false)
 bool(false)
 ```
 
-##### v4::isTextual | v6::isTextual
+##### :small_blue_diamond: v4::isTextual | v6::isTextual
 
 ###### Description
 
@@ -194,7 +194,7 @@ bool(false)
 bool(false)
 ```
 
-##### v4::isCIDR | v6::isCIDR
+##### :small_blue_diamond: v4::isCIDR | v6::isCIDR
 
 ###### Description
 
@@ -226,7 +226,7 @@ bool(false)
 bool(false)
 ```
 
-##### v4::isRange | v6::isRange
+##### :small_blue_diamond: v4::isRange | v6::isRange
 
 ###### Description
 
@@ -264,152 +264,245 @@ bool(false)
 
 #### Properties
 
-##### v4::$privateNetworks
+##### :small_orange_diamond: v4::$privateNetworks
 
-TODO
+###### Description
 
-##### v4::$multicastNetworks
+Array of private v4 networks as described in [rfc1918](https://tools.ietf.org/html/rfc1918#section-3).
 
-TODO
+##### :small_orange_diamond: v4::$multicastNetworks
 
-##### v4::$reservedNetworks
+###### Description
 
-TODO
+Array of multicast v4 networks as described in [rfc3171](https://tools.ietf.org/html/rfc3171).
 
-##### v4::$networkTypes
+##### :small_orange_diamond: v4::$reservedNetworks
 
-TODO
+###### Description
 
-##### v6::$addressTypes
+Array of reserved v4 networks as described in [RFC 1112, Section 4](https://tools.ietf.org/html/rfc1112#section-4).
 
-TODO
+##### :small_orange_diamond: v4::$networkTypes
+
+###### Description
+
+Array of associative arrays representing special-purpose v4 addresses with their descriptions, [rfc5735](https://tools.ietf.org/html/rfc5735#section-4).
+
+##### :small_orange_diamond: v6::$addressTypes
+
+###### Description
+
+Array of associative arrays representing v6 address types with their descriptions, [rfc4291](https://tools.ietf.org/html/rfc4291).
 
 #### Methods
 
-##### v4::version | v6::version
+##### :small_blue_diamond: v4::version | v6::version
+
+###### Description
+
+```
+public function version ( void ) : int;
+```
+
+###### Return values
+
+Returns the version number of the address of the current object.
+
+###### Examples
+
+```php
+var_dump(v4::create('10.0.0.0')->version());
+var_dump(v6::create('::1')->version());
+```
+
+```
+int(4)
+int(6)
+```
+
+##### :small_blue_diamond: v4::assign | v6::assign
+
+###### Description
+
+```
+public static function assign ( $anyFormat [, string $maskString = null ] ) : Address;
+```
+
+Assigns new address and mask values for the current object.
+
+###### Parameters
+
+See [create](#v4create--v6create) method.
+
+###### Examples
+
+```
+$ip = v4::create('127.0.0.1');
+var_dump($ip->addr());
+$ip->assign('192.168.0.1');
+var_dump($ip->addr());
+```
+
+```
+string(9) "127.0.0.1"
+string(11) "192.168.0.1"
+```
+
+##### :small_blue_diamond: v4::binary | v6::binary
 
 TODO
 
-##### v4::assign | v6::assign
+##### :small_blue_diamond: v4::decimal | v6::decimal
 
 TODO
 
-##### v4::binary | v6::binary
+##### :small_blue_diamond: v4::hexadecimal | v6::hexadecimal
 
 TODO
 
-##### v4::decimal | v6::decimal
+##### :small_blue_diamond: v4::netmask | v6::netmask
 
 TODO
 
-##### v4::hexadecimal | v6::hexadecimal
+##### :small_blue_diamond: v4::prefixLength | v6::prefixLength
 
 TODO
 
-##### v4::netmask | v6::netmask
+##### :small_blue_diamond: v4::first | v6::first
 
 TODO
 
-##### v4::prefixLength | v6::prefixLength
+##### :small_blue_diamond: v4::last | v6::last
 
 TODO
 
-##### v4::first | v6::first
+##### :small_blue_diamond: v4::numAddrs | v6::numAddrs
 
 TODO
 
-##### v4::last | v6::last
+##### :small_blue_diamond: v4::numHosts | v6::numHosts
 
 TODO
 
-##### v4::numAddrs | v6::numAddrs
+##### :small_blue_diamond: v4::hostBits | v6::hostBits
 
 TODO
 
-##### v4::numHosts | v6::numHosts
+##### :small_blue_diamond: v4::within | v6::within
 
 TODO
 
-##### v4::hostBits | v6::hostBits
+##### :small_blue_diamond: v4::contains | v6::contains
 
 TODO
 
-##### v4::within | v6::within
+##### :small_blue_diamond: v4::addr | v6::addr
 
 TODO
 
-##### v4::contains | v6::contains
+##### :small_blue_diamond: v4::mask | v6::mask
 
 TODO
 
-##### v4::addr | v6::addr
+##### :small_blue_diamond: v4::cidr | v6::cidr
 
 TODO
 
-##### v4::mask | v6::mask
+##### :small_blue_diamond: v4::range | v6::range
 
 TODO
 
-##### v4::cidr | v6::cidr
+##### :small_blue_diamond: v4::reverse | v6::reverse
 
 TODO
 
-##### v4::range | v6::range
+##### :small_blue_diamond: v4::reverseMask | v6::reverseMask
 
 TODO
 
-##### v4::reverse | v6::reverse
+##### :small_blue_diamond: v4::netType | v6::netType
 
 TODO
 
-##### v4::reverseMask | v6::reverseMask
+##### :small_blue_diamond: v4::network
 
 TODO
 
-##### v4::netType | v6::netType
+##### :small_blue_diamond: v4::broadcast
 
 TODO
 
-##### v4::network
+##### :small_blue_diamond: v4::netClass
 
 TODO
 
-##### v4::broadcast
+##### :small_blue_diamond: v6::full
 
 TODO
 
-##### v4::netClass
+##### :small_blue_diamond: v6::full4
 
 TODO
 
-##### v6::full
+##### :small_blue_diamond: v6::fullMask
 
 TODO
 
-##### v6::full4
+##### :small_blue_diamond: v6::compressed
 
 TODO
 
-##### v6::fullMask
+##### :small_blue_diamond: v6::compressed4
 
 TODO
 
-##### v6::compressed
+### Array access
 
 TODO
 
-##### v6::compressed4
+### Iterators
+
+#### Address iteration
+
+TODO
+
+#### Host iteration
+
+TODO
+
+#### Subnet iteration
 
 TODO
 
 ### Exceptions
 
-TODO
+Library classes and objects can throw exceptions of the following types:
 
-- `\InvalidArgumentException`
-- `\BadMethodCallException`
-- `\DomainException`
-- `\RuntimeException`
+- `\InvalidArgumentException` when calling a method with incorrect arguments;
+- `\DomainException` when trying to use language constructs that do not apply to address objects, for example, overwriting an element when accessing an array by index key;
+- `\RuntimeException` when the library classes can not work in the current environment, for example, PHP GMP extension not installed.
+
+```
+try {
+    $ip = v6::create('invalid addr');
+} catch (\InvalidArgumentException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
+
+try {
+    $ip = v6::create('2002::fdce/64');
+    echo $ip[12]->addr() . PHP_EOL;
+    $ip[12] = 0;
+} catch (\DomainException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
+```
+
+```
+Wrong arguments
+2002::c
+Read-only access
+```
 
 ### Utils Class
 

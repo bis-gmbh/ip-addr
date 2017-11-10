@@ -54,3 +54,25 @@ var_dump(v4::isRange('10.0 - 10.10'));
 var_dump(v4::isRange('192.168.0.1-   192.168.255.255'));
 var_dump(v4::isRange('127.0.0.0-'));
 var_dump(v4::isRange('127.0.0.0-::1'));
+
+var_dump(v4::create('10.0.0.0')->version());
+var_dump(v6::create('::1')->version());
+
+$ip = v4::create('127.0.0.1');
+var_dump($ip->addr());
+$ip->assign('192.168.0.1');
+var_dump($ip->addr());
+
+try {
+    $ip = v6::create('invalid addr');
+} catch (\Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
+
+try {
+    $ip = v6::create('2002::fdce/64');
+    echo $ip[12]->addr() . PHP_EOL;
+    $ip[12] = 0;
+} catch (\DomainException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
