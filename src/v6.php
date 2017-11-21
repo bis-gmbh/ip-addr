@@ -60,7 +60,7 @@ class v6 extends BaseAddress
      */
     public static function isNumeric($value)
     {
-        return (
+        $isValid = (
             (is_int($value) && $value >= 0) || 
             (
                 is_string($value) &&
@@ -70,6 +70,15 @@ class v6 extends BaseAddress
                 )
             )
         );
+
+        if (
+            $isValid === true &&
+            (gmp_cmp(gmp_init($value), gmp_init('0xffffffffffffffffffffffffffffffff')) <= 0)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
