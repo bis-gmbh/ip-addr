@@ -67,7 +67,7 @@ Provider subnets:
 
 ## Used by
 
-TODO
+- [2ip.io IP calculator](https://2ip.io/ip-calc/)
 
 ## API
 
