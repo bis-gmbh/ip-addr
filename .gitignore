@@ -11,4 +11,4 @@ Thumbs.db
 
 # composer
 /vendor
-
+composer.lock
