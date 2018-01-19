@@ -5,7 +5,7 @@
 Install with composer:
 
 ```
-composer require --dev bis-gmbh/ip-addr ^0.6
+composer require bis-gmbh/ip-addr
 ```
 
 ### Installation requirements
