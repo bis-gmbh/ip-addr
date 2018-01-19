@@ -2,6 +2,7 @@
   "name": "bis-gmbh/ip-addr",
   "description": "Manages IPv4 and IPv6 addresses and subnets",
   "keywords": ["php", "library", "ip", "ipv4", "ipv6", "cidr", "rfc791", "rfc4291", "rfc4632"],
+  "type": "library",
   "license": "BSD-3-Clause",
   "authors": [
     {
@@ -11,7 +12,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "ext-gmp": ">=5.4"
+    "ext-gmp": "*"
   },
   "require-dev": {
         "phpunit/phpunit": "^5.2"
